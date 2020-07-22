@@ -8,3 +8,40 @@
 # nf_conntrack.hashsize=262144)
 /sbin/sysctl -w net.nf_conntrack_max=2097152
 
+# tcp syn backlog
+/sbin/sysctl -w net.ipv4.tcp_max_syn_backlog=8192
+
+# netdev backlog
+/sbin/sysctl -w net.core.netdev_max_backlog=200000
+
+# tw reuse enable
+/sbin/sysctl -w net.ipv4.tcp_tw_reuse=1
+
+# conntrack timeout
+/sbin/sysctl -w net.netfilter.nf_conntrack_tcp_timeout_time_wait=15
+
+# fin ip4 tcp timeout
+/sbin/sysctl -w net.ipv4.tcp_fin_timeout=20
+
+# max ip4 tcp orphans
+/sbin/sysctl -w net.ipv4.tcp_max_orphans=1021
+
+
+# DB Tuning
+echo "max_connections = 500
+shared_buffers = 384MB
+effective_cache_size = 1152MB
+maintenance_work_mem = 96MB
+checkpoint_completion_target = 0.9
+wal_buffers = 11796kB
+default_statistics_target = 100
+random_page_cost = 4
+effective_io_concurrency = 2
+work_mem = 786kB
+min_wal_size = 2GB
+max_wal_size = 8GB
+max_worker_processes = 2
+max_parallel_workers_per_gather = 1
+max_parallel_workers = 2
+max_parallel_maintenance_workers = 1
+" > /etc/postgresql/11/main/conf.d/untangle.conf
